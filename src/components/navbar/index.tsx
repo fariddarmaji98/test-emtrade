@@ -18,7 +18,6 @@ const Navbar = ({
       const scrollPosition = window.scrollY
 
       console.log('===> scrollPosition', scrollPosition)
-      // console.log('===> navbarRef', navbarRef.current?.scroll)
     })
   }, [])
 

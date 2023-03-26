@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 
 interface SubTitleProps {
   children: ReactNode,
@@ -12,4 +12,4 @@ const SubTitle = ({
     {children}
   </span>)
  
-export default SubTitle;
+export default SubTitle

@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { NextPage } from 'next'
 import { AppContext } from 'next/app'
 import axios from 'axios'
 import { 
@@ -6,86 +8,111 @@ import {
   Banner,
   EventDetail,
   Checkout,
-  Template
+  Template,
+  ServerError
 } from '@/components/index.d'
 
 interface HomeProps {
-  ress: string,
-  status: boolean,
-  message?: string
+  ress: {
+    status: boolean,
+    statusCode: number,
+    message?: string
+  }
+  data: {
+    name: string,
+    date: string,
+    time: string,
+    location: string,
+    image: string,
+    short_description: string,
+    description: string,
+    price: number,
+    discount: number,
+    total_price: number
+  },
 }
 
-function Home({
+const Home: NextPage<HomeProps> = ({
   ress,
-  status,
-  message
-}: HomeProps) {
-  console.log('===> ress', ress)
+  data
+}) => {
+  const { 
+    name,
+    date,
+    time,
+    location,
+    image,
+    short_description,
+    description,
+    price,
+    discount,
+    total_price
+  } = data
+  
+  const {
+    status,
+    statusCode,
+    message
+  } = ress
 
   return (
     <>
-      <Template>
+      <Template 
+        pageName={name} 
+        status={status} 
+        statusCode={statusCode} 
+        errorMessage={message}
+      >
           <div className='pt-6 xs:px-6 bg-cs-black xs:bg-white mb-6'>
             <Banner 
-              src="https://staging-emtrade.s3.ap-southeast-1.amazonaws.com/event/Event_Mock.png" 
+              src={image} 
             />
           </div>
           <div className='w-full flex flex-col px-6'>
             <Title costumeClass="mb-6">
-              Bedah Emiten TOWR PT Sarana Menara Nusantara TBK.
+              {short_description}
             </Title>
             <EventDetail 
-              date="Jumat, 16 Juli 2021" 
-              time="16:00 - 17:00 WIB" 
-              location="Webinar via Zoom"
+              date={date} 
+              time={time} 
+              location={location}
               costumeClass="mb-6"
             />
-            <Description costumeClass="mb-4">
-              EMITALK merupakan special webinar yang menghadirkan pembicara dari emiten saham untuk memberikan pemahaman secara lebih mendalam kepada oara investor saham tentang kinerja dan kondisi terkini perusahaan.
-            </Description>
-            <Description costumeClass="mb-4">
-              Pada kesempatan ini Emitalk berkolaborasi dengan PT Kalbe Farma TBK yang akan membahas kondisi dan kinerja terkini KLBF.
-            </Description>
-            <Description costumeClass="mb-4">
-              Rincian acara Emitalk: Menuju Indonesia Sehat adalah sebagai berikut:
-            </Description>
-            <Description costumeClass="mb-4">
-              Hari, Tanggal : Jumat, 16 Juli 2021
-              Waktu : 16:00 - 17:00
-              Tema :KLBF menju indonesia sehat
-            </Description>
-            <Description costumeClass="mb-4">
-              Narasumber : Bernadus K. Winata, Direktur PT Kalbe Farma, TBK
-            </Description>
-            <Description costumeClass="mb-4">
-              Platform : Webinar via Zoom
-            </Description>
-            <Description costumeClass="mb-4">
-              Happy Learning, Happy Investing!
-            </Description>
+            <Description 
+              text={description} 
+              costumeClass="flex flex-col gap-4 mb-9" 
+            />
           </div>
           
-          <Checkout discount={10} price={150000} total_price={110000} />
+          <Checkout 
+            eventName={short_description}
+            discount={discount} 
+            price={price} 
+            total_price={total_price}
+          />
       </Template>
     </>
   )
 }
 
-Home.getInitialProps = async (ctx: AppContext) => {
-  const ressData = await axios.get('https://demo1563682.mockable.io/event')
-
-  if (ressData.status !== 200) {
-    return {
-      status: false,
-      message: 'Terdapat kesalahan dalam mengambil data, harap hubungi admin 🙏'
-    }
-  }
+Home.getInitialProps = async () => {
+  const ressData = await axios
+    .get('https://demo1563682.mockable.io/event')
+    .catch(error => ({ status: error.response.status, data: {} }))
 
   console.log('===> ressData', ressData)
+
+  const successGetApi = ressData.status === 200
   
   return {
-    status: true,
-    ress: 'hallo'
+    ress: {
+      status: successGetApi,
+      statusCode: ressData.status,
+      ...!successGetApi && {
+        message: 'Terdapat kesalahan dalam mengambil data, harap hubungi admin 🙏'
+      }
+    },
+    data: ressData.data,
   }
 }
 

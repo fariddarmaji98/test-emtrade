@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Title, SubTitle, Description } from "../text";
-import { HiArrowLeft, HiOutlineShare } from 'react-icons/hi'
-import { BsShare } from 'react-icons/bs'
+import React, { useEffect, useRef, useState } from "react"
+import { SubTitle } from "../text"
+import { HiArrowLeft, HiOutlineShare } from "react-icons/hi"
+import Swal from "sweetalert2"
 
 interface NavbarProps {
   name: string
@@ -11,26 +11,36 @@ const Navbar = ({
   name
 }: NavbarProps) => {
   const navbarRef = useRef<HTMLDivElement>(null)
-  const [navbarOpen, setNavbarOpen] = useState(false)
+  const [navSticky, setNavSticky] = useState(false)
+  const [currPosition, setCurrPosition] = useState(0)
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
       const scrollPosition = window.scrollY
-
-      console.log('===> scrollPosition', scrollPosition)
+       
+      setNavSticky(currPosition > scrollPosition)
+      setCurrPosition(scrollPosition)
     })
-  }, [])
+  })
+
+  const handleComingSoon = () => Swal.fire({
+    icon: "info",
+    title: "Coomingsoon",
+  })
 
   return (<nav 
-    className="sticky top-0 backdrop-blur-md bg-white/90 px-1 xs:px-5 py-3.5 flex items-center justify-between xs:gap-x-7 shadow-cs-1"
+    className={`
+      ${navSticky && 'sticky top-0 transition duration-1000'}
+      backdrop-blur-md bg-white/90 px-1 xs:px-5 pt-[38px] xs:pt-4 pb-3.5 flex items-center justify-between xs:gap-x-7 shadow-cs-1
+    `}
     ref={navbarRef}
   >
-    <HiArrowLeft className="w-[24px] xs:w-6 h-[24px] xs:h-6 cursor-pointer" />
+    <HiArrowLeft className="w-[24px] xs:w-6 h-[24px] xs:h-6 cursor-pointer" onClick={() => handleComingSoon()} />
     <div className="w-10/12 xs:w-full">
       <SubTitle costumeClass="w-full block text-ellipsis overflow-hidden whitespace-nowrap px-2">{name}</SubTitle>
     </div>
-    <HiOutlineShare className="w-[24px] xs:w-6 h-[24px] xs:h-6 cursor-pointer" />
-  </nav>);
+    <HiOutlineShare className="w-[24px] xs:w-6 h-[24px] xs:h-6 cursor-pointer" onClick={() => handleComingSoon()} />
+  </nav>)
 }
  
-export default Navbar;
+export default Navbar

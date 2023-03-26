@@ -1,16 +1,18 @@
-import Head from "next/head";
+import Head from "next/head"
 
 interface HeaderProps {
-  
+  pageName: string
 }
  
-const Header: FunctionComponent<HeaderProps> = () => {
+const Header = ({
+  pageName
+}: HeaderProps) => {
   return (<Head>
-    <title>Farid Darmaji ~ Test Emtrade</title>
-    <meta name="description" content="Test Farid Darmaji" />
+    <title>{`${pageName} ~ Test Emtrade`}</title>
+    <meta name="description" content={pageName} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.ico" />
-  </Head>);
+  </Head>)
 }
  
-export default Header;
+export default Header

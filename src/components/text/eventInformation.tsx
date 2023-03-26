@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { SubDescription } from ".";
+import { ReactNode } from "react"
+import { SubDescription } from "."
 
 interface EventInformationProps {
   icon: string,
@@ -20,4 +20,4 @@ const EventInformation = ({
   </SubDescription>
 </div>)
  
-export default EventInformation;
+export default EventInformation

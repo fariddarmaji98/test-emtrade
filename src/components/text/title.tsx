@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 
 interface TitleProps {
   children: ReactNode,
@@ -15,4 +15,4 @@ const Title = ({
     {children}
   </span>)
  
-export default Title;
+export default Title

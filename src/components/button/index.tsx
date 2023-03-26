@@ -1,23 +1,28 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 
 interface ButtonProps {
   children: ReactNode,
-  warning?:boolean,
+  primary?: boolean,
+  warning?: boolean,
+  onclick?: Function
 }
 
 const Button = ({
   children,
-  warning
+  onclick = () => {},
+  primary,
+  warning,
 }: ButtonProps) => {
   
   let costumeClass: string = "border border-slate-700"
 
-  if (warning) {
-    costumeClass = "bg-cs-warning"
-  }
+  if (warning) costumeClass = "bg-cs-warning"
+
+  if (primary) costumeClass = "bg-blue-700"
 
   return (<button 
     className={`w-40 h-12 rounded-[100px] flex justify-center items-center ${costumeClass}`}
+    onClick={() => onclick()}
   >
     <span className="text-base text-white font-semibold font-inter">
       {children}
@@ -25,4 +30,4 @@ const Button = ({
   </button>)
 }
  
-export default Button;
+export default Button

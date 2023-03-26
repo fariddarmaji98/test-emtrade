@@ -1,4 +1,4 @@
-import { EventInformation } from "../text";
+import { EventInformation } from "../text"
 
 interface EventDetailProps {
   time: string,
@@ -12,27 +12,13 @@ const EventDetail = ({
   date,
   location,
   costumeClass
-}: EventDetailProps) => {
-  return (<div className={`
+}: EventDetailProps) => (<div className={`
     flex flex-col gap-3 p-4 rounded-2xl bg-neutral-100
     ${costumeClass}
   `}>
-    <EventInformation icon="📅" text={time} />
-    <EventInformation icon="⏰" text={date} />
-    <EventInformation icon="📍" text={location} />
-  </div>);
-}
+  <EventInformation icon="📅" text={time} />
+  <EventInformation icon="⏰" text={date} />
+  <EventInformation icon="📍" text={location} />
+</div>)
  
-export default EventDetail;
-
-// interface DescriptionProps {
-//   children: ReactNode
-// }
- 
-// const Description = ({
-//   children
-// }: DescriptionProps) => (<span className={`
-//     text-base text-cs-black font-inter
-//   `}>
-//     {children}
-//   </span>)
+export default EventDetail

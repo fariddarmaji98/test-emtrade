@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 
 interface SubDescriptionProps {
   children: ReactNode
@@ -12,4 +12,4 @@ const SubDescription = ({
     {children}
   </span>)
  
-export default SubDescription;
+export default SubDescription

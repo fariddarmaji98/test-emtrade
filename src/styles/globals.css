@@ -6,4 +6,5 @@
 
 html {
   background-color: #DFE7FD;
+  scroll-behavior: smooth;
 }

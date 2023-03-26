@@ -9,7 +9,7 @@ const Title = ({
   children,
   costumeClass
 }: TitleProps) => (<span className={`
-    text-2xl text-cs-black font-bold font-inte
+    text-2xl text-cs-black font-bold font-inte break-words
     ${costumeClass}
   `}>
     {children}

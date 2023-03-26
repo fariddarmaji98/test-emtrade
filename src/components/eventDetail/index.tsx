@@ -13,7 +13,7 @@ const EventDetail = ({
   location,
   costumeClass
 }: EventDetailProps) => (<div className={`
-    flex flex-col gap-3 p-4 rounded-2xl bg-neutral-100
+    flex flex-col gap-3 p-1 xxs:p-4 rounded-2xl bg-neutral-100
     ${costumeClass}
   `}>
   <EventInformation icon="📅" text={time} />

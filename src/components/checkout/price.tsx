@@ -11,8 +11,8 @@ const Price = ({
   discount,
   total_price
 }: PriceProps) => (<div className="flex flex-col gap-1">
-  <div className="flex items-center gap-2">
-    <span className="text-xs font-bold font-inter text-pink-700 bg-pink-200 p-0.5">
+  <div className="flex flex-col xxs:flex-row xxs:items-center gap-2">
+    <span className="w-max text-xs font-bold font-inter text-pink-700 bg-pink-200 p-0.5">
       {NUMBER_FORMAT.FormatPercent(discount)}
     </span>
     <span className="text-xs font-inter text-neutral-500 line-through">

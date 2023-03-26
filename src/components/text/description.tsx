@@ -11,7 +11,10 @@ const Description = ({
 }: DescriptionProps) => (
   <div 
     dangerouslySetInnerHTML={{ __html: text }}
-    className={`text-base text-cs-black font-inter ${costumeClass}`}
+    className={`
+      text-base text-cs-black font-inter break-words
+      ${costumeClass}
+    `}
   ></div>
 )
  

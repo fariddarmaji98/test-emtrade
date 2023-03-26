@@ -14,17 +14,20 @@ const Button = ({
   warning,
 }: ButtonProps) => {
   
-  let costumeClass: string = "border border-slate-700"
+  let costumeClass: string = "border border-neutral-700 text-neutral-700"
 
-  if (warning) costumeClass = "bg-cs-warning"
+  if (warning) costumeClass = "bg-cs-warning hover:bg-orange-500 text-white"
 
-  if (primary) costumeClass = "bg-blue-700"
+  if (primary) costumeClass = "bg-blue-500 hover:bg-blue-700 text-white"
 
   return (<button 
-    className={`w-40 h-12 rounded-[100px] flex justify-center items-center ${costumeClass}`}
+    className={`
+      w-full xxs:w-40 h-12 rounded-[100px] flex justify-center items-center hover:shadow-lg hover:duration-100
+      ${costumeClass}
+    `}
     onClick={() => onclick()}
   >
-    <span className="text-base text-white font-semibold font-inter">
+    <span className="text-base font-semibold font-inter">
       {children}
     </span>
   </button>)

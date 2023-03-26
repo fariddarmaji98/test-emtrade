@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import { NextPage } from 'next'
-import { AppContext } from 'next/app'
-import axios from 'axios'
+import { API } from '@/utils'
 import { 
   Title, 
   Description,
@@ -9,7 +7,6 @@ import {
   EventDetail,
   Checkout,
   Template,
-  ServerError
 } from '@/components/index.d'
 
 interface HomeProps {
@@ -32,28 +29,14 @@ interface HomeProps {
   },
 }
 
-const Home: NextPage<HomeProps> = ({
-  ress,
-  data
-}) => {
+const Home: NextPage<HomeProps> = ({ ress, data }) => {
   const { 
-    name,
-    date,
-    time,
-    location,
-    image,
-    short_description,
-    description,
-    price,
-    discount,
-    total_price
+    name, date, time, location,
+    image, short_description, description,
+    price, discount, total_price
   } = data
   
-  const {
-    status,
-    statusCode,
-    message
-  } = ress
+  const { status, statusCode, message } = ress
 
   return (
     <>
@@ -68,7 +51,7 @@ const Home: NextPage<HomeProps> = ({
               src={image} 
             />
           </div>
-          <div className='w-full flex flex-col px-6'>
+          <div className='w-full flex flex-col p-2 xxs:px-6'>
             <Title costumeClass="mb-6">
               {short_description}
             </Title>
@@ -95,24 +78,12 @@ const Home: NextPage<HomeProps> = ({
   )
 }
 
-Home.getInitialProps = async () => {
-  const ressData = await axios
-    .get('https://demo1563682.mockable.io/event')
-    .catch(error => ({ status: error.response.status, data: {} }))
-
-  console.log('===> ressData', ressData)
-
-  const successGetApi = ressData.status === 200
+Home.getInitialProps = async (ctx) => {
+  const isErrorApiTest = ctx.query.test === 'error'
+  const ress = await API.GET(isErrorApiTest ? 'example' : 'event')
   
   return {
-    ress: {
-      status: successGetApi,
-      statusCode: ressData.status,
-      ...!successGetApi && {
-        message: 'Terdapat kesalahan dalam mengambil data, harap hubungi admin 🙏'
-      }
-    },
-    data: ressData.data,
+    ...ress
   }
 }
 

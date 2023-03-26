@@ -1,5 +1,6 @@
-import Button from "../button"
 import { HiArrowLeft } from 'react-icons/hi'
+import Button from "../button"
+import { ALERT } from "@/utils"
 
 interface ServerErrorProps {
   statusCode: number,
@@ -16,7 +17,7 @@ const ServerError = ({
   <span className="text-xl font-semibold text-center text-neutral-400 font-inter max-w-md">
     {errorMessage}
   </span>
-  <Button primary>
+  <Button onclick={() => ALERT.Coomingsoon()} primary>
     <div className="flex items-center gap-2">
       <HiArrowLeft /> Kembali
     </div>
